@@ -6,16 +6,14 @@ import mongoose from 'mongoose'
 import cors, { CorsOptions } from 'cors'
 import * as routes from './routes/index.js'
 import morgan from 'morgan'
+
+/* import your websocket controllers 
 import { Server } from 'socket.io'
 import { feedHandler, userSearchHandler } from './websockets/index.js'
+*/
 
 const app: Express = express()
 const server = createServer(app)
-const io = new Server(server, {
-  cors: {
-    origin: ["http://localhost:5173"],
-  }
-})
 
 const PORT: string | number = process.env.PORT || 4000
 const allowedOrigins = ["http://localhost:5173"]
@@ -23,12 +21,21 @@ const options: CorsOptions = {
   origin: allowedOrigins
 }
 
+/* Connect you controllers here 
+ *
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:5173"],
+  }
+})
+
 const onConnection = (socket) => {
   feedHandler(io, socket)
   userSearchHandler(io, socket)
 }
 
 io.on('connection', onConnection)
+ * */
 
 app.use(cors(options))
 app.use(express.json())
