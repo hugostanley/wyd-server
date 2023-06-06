@@ -18,9 +18,9 @@ const server = createServer(app)
 const FRONT_END: string = process.env.FRONT_END!
 const PORT: string | number = process.env.PORT || 4000
 const allowedOrigins = [FRONT_END]
-const options: CorsOptions = {
-  origin: allowedOrigins
-}
+//const options: CorsOptions = {
+//  origin: allowedOrigins
+//}
 
 /* Connect you controllers here 
  *
@@ -38,7 +38,7 @@ const onConnection = (socket) => {
 io.on('connection', onConnection)
  * */
 
-app.use(cors(options))
+app.use(cors())
 app.use(express.json())
 app.use(morgan('tiny'))
 
