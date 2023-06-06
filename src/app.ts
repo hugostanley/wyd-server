@@ -15,8 +15,9 @@ import { feedHandler, userSearchHandler } from './websockets/index.js'
 const app: Express = express()
 const server = createServer(app)
 
+const FRONT_END: string = process.env.FRONT_END!
 const PORT: string | number = process.env.PORT || 4000
-const allowedOrigins = ["http://localhost:5173"]
+const allowedOrigins = [FRONT_END]
 const options: CorsOptions = {
   origin: allowedOrigins
 }
