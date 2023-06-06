@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 export async function createNewUser(req: Request, res: Response) {
   try {
     const userInfo: User = req.body
+    console.log(userInfo)
 
     const takenUserName = await UserModel.findOne({ username: userInfo.username })
     const takenEmail = await UserModel.findOne({ email: userInfo.email })
