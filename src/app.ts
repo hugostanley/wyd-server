@@ -46,7 +46,7 @@ Object.values(routes).forEach(route => {
 })
 
 /* Modify as you please */
-const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@nodetodo.nsgf0ny.mongodb.net/?retryWrites=true&w=majority`
+const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@wyd-server.kus8b6f.mongodb.net/?retryWrites=true&w=majority`
 
 mongoose.connect(uri, {
 }).then(() => {
