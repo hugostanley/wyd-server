@@ -42,6 +42,7 @@ app.use(express.json())
 app.use(morgan('tiny'))
 
 Object.values(routes).forEach(route => {
+  // @ts-ignore
   app.use(route)
 })
 
