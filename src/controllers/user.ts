@@ -20,7 +20,7 @@ export async function createNewUser(req: Request, res: Response) {
     }
 
 
-  } catch (error) {
+  } catch (error: any) {
     res.status(error.status || 500).json({
       error: error.message || error
     })
@@ -56,7 +56,7 @@ export async function signInUser(req: Request, res: Response) {
     } else {
       throw { status: 404, message: 'Incorrect password' }
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(error.status || 500).json({
       error: error.message || error
     })
@@ -69,7 +69,7 @@ export async function getUserDetails(req: Request, res: Response) {
   try {
     const currentUser = await UserModel.findById(req.body.user.id, ['id', 'username', 'email'])
     res.status(200).json({ message: "Success", user: currentUser })
-  } catch (error) {
+  } catch (error: any) {
     res.status(error.status || 500).json({
       error: error.message || error
     })
