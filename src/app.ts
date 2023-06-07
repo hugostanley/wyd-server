@@ -18,7 +18,7 @@ const PORT: string | number = process.env.PORT || 4000
 const io = new Server(server, {
   cors: {
     origin: [FRONT_END],
-  }
+  },
 })
 
 const onConnection = (socket: any) => {

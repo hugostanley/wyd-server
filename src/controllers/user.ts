@@ -52,6 +52,7 @@ export async function signInUser(req: Request, res: Response) {
           res.status(200).json({
             message: 'Logged in successfully',
             token: 'Bearer ' + token,
+            user: userLoggingIn
           })
         })
     } else {
