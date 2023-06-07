@@ -1,15 +1,13 @@
 import { TodoModel } from '../models/index.js'
-async function feedUpdater(socket: any) {
+async function feedUpdater(socket: any, id: any) {
   try {
-    console.log('getting!')
-    const taskList = await TodoModel.find()
+    const taskList = await TodoModel.find({ createdByUser: id })
     socket.emit('feed_updated', taskList)
   } catch (error) {
     console.error(error)
   }
 }
 export function todoHandler(io: any, socket: any) {
-  socket.on('update_feed', () => feedUpdater(socket))
-  socket.on('get_feed', () => feedUpdater(socket))
+  socket.on('get_feed', (id: string) => feedUpdater(socket, id))
 }
 
