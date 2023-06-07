@@ -14,7 +14,7 @@ const validateEmail = function(email: string) {
 const user: Schema = new Schema({
   username: {
     type: String,
-    uniqie: true,
+    unique: true,
     required: true
   },
   email: {

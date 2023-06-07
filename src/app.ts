@@ -3,40 +3,29 @@ import { createServer } from 'http'
 dotenv.config()
 import express, { Express } from 'express'
 import mongoose from 'mongoose'
-import cors, { CorsOptions } from 'cors'
+import cors from 'cors'
 import * as routes from './routes/index.js'
 import morgan from 'morgan'
-
-/* import your websocket controllers 
 import { Server } from 'socket.io'
-import { feedHandler, userSearchHandler } from './websockets/index.js'
-*/
+import { todoHandler } from './websockets/index.js'
 
 const app: Express = express()
 const server = createServer(app)
 
 const FRONT_END: string = process.env.FRONT_END!
 const PORT: string | number = process.env.PORT || 4000
-const allowedOrigins = [FRONT_END]
-//const options: CorsOptions = {
-//  origin: allowedOrigins
-//}
 
-/* Connect you controllers here 
- *
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: [FRONT_END],
   }
 })
 
-const onConnection = (socket) => {
-  feedHandler(io, socket)
-  userSearchHandler(io, socket)
+const onConnection = (socket: any) => {
+  todoHandler(io, socket)
 }
 
 io.on('connection', onConnection)
- * */
 
 app.use(cors())
 app.use(express.json())
