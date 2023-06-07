@@ -1,3 +1,4 @@
+import { Document } from "mongoose";
 import { Schema, model } from "mongoose";
 const ObjectId = Schema.Types.ObjectId
 

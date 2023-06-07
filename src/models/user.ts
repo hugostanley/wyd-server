@@ -1,9 +1,11 @@
 import { model, Schema, Document } from "mongoose";
+const ObjectId = Schema.Types.ObjectId
 
 export interface User extends Document {
   username: string;
   email: string;
   password: string
+  friends: string[]
 }
 
 const validateEmail = function(email: string) {
@@ -26,7 +28,8 @@ const user: Schema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  friends: [{ type: ObjectId, ref: "Friendship" }]
 }, {
   timestamps: true
 })
