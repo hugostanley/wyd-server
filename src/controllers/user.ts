@@ -76,7 +76,19 @@ export async function getUserDetails(req: Request, res: Response) {
       error: error.message || error
     })
     console.error(error)
-
   }
 }
 
+
+export async function getAllUsers(req: Request, res: Response) {
+  try {
+    const userId = req.body.user.id
+    const users = await UserModel.find({ _id: { $ne: userId } })
+    res.status(200).json({ message: "success", users })
+  } catch (error: any) {
+    res.status(error.status || 500).json({
+      error: error.message || error
+    })
+    console.error(error)
+  }
+}
