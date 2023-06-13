@@ -1,5 +1,10 @@
 import { Response, Request } from "express";
-import { Todo, TodoModel, UserModel } from '../models/index.js'
+import { Friendship, Todo, TodoModel, User, UserModel } from '../models/index.js'
+
+export interface PopulatedFriendship extends Omit<Friendship, "requester" | "recipient"> {
+  requester: User;
+  recipient: User;
+}
 
 export async function addNewTodo(req: Request, res: Response) {
   try {
@@ -41,7 +46,7 @@ export async function editTodo(req: Request, res: Response) {
         }
       })
       const updatedTodo = await TodoModel.findByIdAndUpdate(newBody._id, { description: newBody.description, title: newBody.title }, { new: true })
-      if(updatedTodo){
+      if (updatedTodo) {
         await updatedTodo.populate('createdByUser')
       }
 
@@ -75,7 +80,7 @@ export async function deleteTodo(req: Request, res: Response) {
 
 export async function getFeed(req: Request, res: Response) {
   try {
-    const currentUser = await UserModel.findById(req.body.user.id).populate({
+    const currentUser = await UserModel.findById(req.body.user.id).populate<{ friends: PopulatedFriendship[] }>({
       path: 'friends',
       populate: {
         path: 'requester recipient',
