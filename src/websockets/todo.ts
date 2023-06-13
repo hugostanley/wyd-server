@@ -1,32 +1,16 @@
-// @ts-nocheck
-import { TodoModel, UserModel } from '../models/index.js'
-async function feedUpdater(socket: any, id: any) {
-  try {
-    const currentUser = await UserModel.findById(id).populate({
-      path: 'friends',
-      populate: {
-        path: 'requester recipient',
-        model: 'User'
-      }
-    }).exec()
-    if (currentUser) {
-      const friendIdArr = currentUser.friends.map(item => {
-        if (item.status === "friends") {
-          if (item.recipient._id.toString() !== currentUser.id) {
-            return item.recipient._id.toString()
-          } else if (item.requester._id.toString() !== currentUser.id) {
-            return item.requester._id.toString()
-          }
-        }
-      })
-      const taskList = await TodoModel.find({ createdByUser: { $in: [...friendIdArr, currentUser.id] } })
-      socket.emit('feed_updated', taskList)
-    }
-  } catch (error) {
-    console.error(error)
-  }
+async function feedUpdater({ socket, feedIds, io, todo, type }) {
+  if (!feedIds) return
+  feedIds.forEach(id => {
+    io.to(id).emit('feed_updated', { type, todo })
+  })
 }
 export function todoHandler(io: any, socket: any) {
-  socket.on('get_feed', (id: string) => feedUpdater(socket, id))
+  socket.on('join_room', (id) => {
+    socket.join(id)
+  })
+
+  socket.on('get_feed', ({ id, feedIds, todo, type }: { id: stirng, feedIds: string[] }) => {
+    feedUpdater({ socket, feedIds, io, todo, type })
+  })
 }
 
