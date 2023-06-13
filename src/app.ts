@@ -7,7 +7,7 @@ import cors from 'cors'
 import * as routes from './routes/index.js'
 import morgan from 'morgan'
 import { Server } from 'socket.io'
-import { todoHandler } from './websockets/index.js'
+import { todoHandler, friendsHandler } from './websockets/index.js'
 
 const app: Express = express()
 const server = createServer(app)
@@ -23,6 +23,7 @@ const io = new Server(server, {
 
 const onConnection = (socket: any) => {
   todoHandler(io, socket)
+  friendsHandler(io, socket)
 }
 
 io.on('connection', onConnection)
