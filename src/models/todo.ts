@@ -11,7 +11,6 @@ export interface Todo extends Document {
 const todoSchema: Schema = new Schema({
   title: {
     type: String,
-    unique: true,
     required: true
   },
   status: {
